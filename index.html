@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUM WAVE 프리셋 셀렉터</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#20241f;--ink2:#55594e;--mut:#8a8f83;--line:#e2e5da;--line2:#cfd3c6;--card:#fff;--soft:#f6f8f2}
+*{box-sizing:border-box}
+html{background:#e9ebe3}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);margin:0;max-width:940px;padding:34px 40px 52px;background:var(--card);margin:26px auto;box-shadow:0 2px 24px rgba(0,0,0,.08);border-radius:8px;font-size:14px;line-height:1.55}
+.hd{border-bottom:2px solid #14170f;padding-bottom:14px;margin-bottom:20px}
+.kick{font-size:10px;letter-spacing:.26em;color:#1D9E75;font-weight:700}
+h1{font-family:'Noto Serif KR',serif;font-size:24px;margin:6px 0 4px;color:#14170f}
+.hsub{color:var(--ink2);font-size:13px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{flex:1;min-width:150px;display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line2);border-radius:12px;background:var(--card);cursor:pointer;transition:.12s}
+.tab:hover{border-color:#9aa08f}
+.tab .tg{font-size:9.5px;letter-spacing:.06em;padding:1px 7px;border-radius:20px;background:var(--soft);color:var(--ink2)}
+.tab .tt{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px}
+.tab .td{font-size:11px;color:var(--mut)}
+.tab.on{border:2px solid var(--ac);padding:10px 13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.col .ch{font-size:11px;letter-spacing:.03em;color:var(--mut);margin:0 0 9px;display:flex;align-items:center;gap:6px;font-weight:500}
+.col .no{width:17px;height:17px;border-radius:50%;background:#14170f;color:#fff;font-size:10px;display:inline-flex;align-items:center;justify-content:center}
+.chip{width:100%;text-align:left;padding:9px 11px;margin-bottom:7px;border:1px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:6px;transition:.1s;font-family:inherit;color:var(--ink)}
+.chip:hover{border-color:var(--line2)}
+.chip.on{border:1.5px solid var(--ac);background:var(--soft)}
+.chip .rec{font-size:9px;padding:1px 6px;border-radius:20px;background:#eafaf3;color:#1a7a58;white-space:nowrap}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:18px 20px}
+.chead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:4px}
+.bd{font-size:11px;padding:2px 9px;border-radius:20px;background:var(--ac);color:#fff}
+.path{font-size:13px;color:var(--ink2);margin-bottom:14px;font-family:'Noto Sans KR'}
+.sec{font-size:11px;letter-spacing:.03em;color:var(--mut);margin:0 0 6px;font-weight:500}
+.moods{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.mood{font-size:12px;padding:3px 10px;border-radius:8px;background:var(--soft);border:1px solid var(--line)}
+.mood b{font-weight:700}.mood span{color:var(--mut);margin-left:5px;font-size:11px}
+.note{font-size:12.5px;line-height:1.6;color:var(--ink2);background:var(--soft);border-radius:8px;padding:10px 12px;margin-bottom:14px}
+.sci{font-size:12.5px;line-height:1.6;color:#5a4a2e;background:#fbf4e6;border-left:3px solid #c9962f;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:14px}
+.sci b{color:#8a6416}
+.tl{margin-bottom:14px}
+.tlbar{display:flex;width:100%;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.tlseg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:10.5px;line-height:1.15;padding:2px;overflow:hidden;white-space:nowrap;min-width:0}
+.tlseg b{font-size:11px;font-weight:700}
+.tlseg .tm{font-size:9.5px;opacity:.9}
+.tlnote{font-size:11px;color:var(--mut);margin-top:5px}
+.arr{margin-bottom:14px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.arow{display:flex;gap:10px;padding:8px 11px;border-bottom:1px solid var(--soft);font-size:12.5px;align-items:baseline}
+.arow:last-child{border-bottom:0}
+.alr{flex-shrink:0;width:38px;font-size:10px;font-weight:700;color:#fff;background:var(--ac);border-radius:5px;text-align:center;padding:2px 0}
+.act{color:var(--ink2);line-height:1.5}
+.act .amu{color:var(--mut);font-size:11.5px}
+.warn{font-size:12px;line-height:1.55;color:#8a3d2e;background:#fdf0ec;border-left:3px solid #d0573f;border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:14px}
+.steps{margin-bottom:18px}
+.step{margin-bottom:9px;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--card)}
+.step.act{border-color:var(--ac);border-width:1.5px}
+.shead{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+.snum{width:20px;height:20px;border-radius:50%;background:#c3c8ba;color:#fff;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.step.act .snum{background:var(--ac)}
+.step.done .snum{background:#14170f}
+.sttl{font-size:12.5px;color:var(--mut);font-weight:500}
+.sval{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--ink);text-align:right}
+.sedit{font-size:10.5px;color:var(--ac);flex-shrink:0;border:1px solid var(--line2);border-radius:20px;padding:2px 9px}
+.sbody{padding:2px 12px 12px}
+.sbody .chip{margin-bottom:7px}
+.stabs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.stab{flex:1;min-width:82px;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--card);cursor:pointer;font-size:12.5px;font-family:inherit;color:var(--ink2);text-align:center;transition:.1s}
+.stab:hover{border-color:#9aa08f}
+.stab.on{border:1.5px solid var(--ac);background:var(--soft);color:var(--ink);font-weight:700}
+.sdesc{font-size:11.5px;color:var(--mut);margin-bottom:12px}
+.arc{margin:2px 0 14px}
+.arow2{font-size:12px;color:var(--ink2);padding:5px 0;border-bottom:1px solid var(--soft);line-height:1.5}
+.arow2:last-child{border-bottom:0}
+.arow2 b{color:var(--ac);margin-right:7px;font-weight:700}
+.nat{font-size:12.5px;line-height:1.6;color:#2a5a4a;background:#eef7f2;border-left:3px solid #5FA98C;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:14px}
+.nat b{color:#3a7a60}
+.shd{font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.04em;margin:20px 0 11px;padding-bottom:6px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:8px}
+.shd .sn{width:19px;height:19px;border-radius:5px;background:var(--ac);color:#fff;font-size:10.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.shd .sx{margin-left:auto;font-size:10.5px;font-weight:400;color:var(--mut);letter-spacing:0}
+.meta{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.mtile{flex:1;min-width:130px;background:var(--soft);border-radius:8px;padding:9px 12px}
+.mtile .l{font-size:10.5px;color:var(--mut)}
+.mtile .v{font-size:14px;font-weight:700;margin-top:2px}
+.gen{width:100%;padding:11px;border:1px solid var(--line2);border-radius:8px;background:#14170f;color:#fff;cursor:pointer;font-size:13px;font-weight:500;font-family:inherit}
+.gen:hover{background:#2a2f26}
+.spec{margin-top:12px;border:1px dashed var(--line2);border-radius:8px;padding:12px 14px;background:#fbfcf8;font-size:12.5px;line-height:1.7;display:none}
+.spec.show{display:block}
+.spec h4{margin:0 0 6px;font-size:12px;color:#1a7a58;font-family:'Noto Sans KR';font-weight:700}
+.spec pre{margin:0;white-space:pre-wrap;font-family:'Noto Sans KR';color:var(--ink)}
+.cpy{margin-top:8px;font-size:11px;padding:5px 12px;border:1px solid var(--line2);border-radius:6px;background:#fff;cursor:pointer;font-family:inherit}
+@media(max-width:720px){.grid{grid-template-columns:1fr 1fr}body{padding:24px 18px}}
+@media(max-width:460px){.grid{grid-template-columns:1fr}}
+.backlink{display:inline-block;font-size:12px;color:var(--mut);text-decoration:none;margin-bottom:4px}.backlink:hover{color:#1D9E75}
+</style></head><body>
+<a class="backlink" href="SUM_WAVE_허브.html">← 허브로</a>
+<div class="hd"><div class="kick">SOUND OASIS · SIGNATURE SOUND</div>
+<h1>SUM WAVE 프리셋 셀렉터</h1></div>
+<div id="app"></div>
+<script>
+// 청음 방식 — 뇌파 수치는 목표상태 지표이며, 실제 구현은 아래 방식으로.
+var M={
+ '스피커':{note:'바이노럴 성립 안 됨 → 템포·다이나믹·화성으로 목표상태 연출 · 공간 배음/앰비언트 · 슈만 7.83Hz 펄스 변조 · 공간 전체 명상'},
+ '헤드폰':{note:'바이노럴+아이소크로닉 · 좌우 배음 분리 · 목표 뇌파는 가청 캐리어(100–400Hz)에 진폭변조로 구현(저주파 직접재생 아님) · 개인 몰입'},
+ '골전도':{note:'주변 인지 개방(안전) · 중음대 리드 선율 궁합 · 바이노럴 제외 → 아이소크로닉/비트 케이던스로 대체 · 이동·러닝'}
+};
+// curve 원소: [단계명, 값라벨, 수치, 비율%]   arr 원소: [레이어, 악기/내용, 진입·강도]
+var L={
+ therapy:{label:'사운드 테라피',tier:'MAIN',ac:'#1D9E75',unit:'Hz',desc:'공간별 회복·리셋·집중. 코어 라인.',
+  spaces:{'웰니스룸':{mode:'회복',method:'헤드폰'},'사무실':{mode:'집중',method:'헤드폰'},'차안':{mode:'리셋',method:'스피커'},'침실':{mode:'회복',method:'스피커'},'라운지':{mode:'리셋',method:'스피커'}},
+  methods:['스피커','헤드폰','골전도'],
+  modes:{
+   '회복':{scale:'계면조(라·도·레·미·솔) — 애상·깊이 · W: Aeolian/펜타토닉',mix:{nature:70,pad:20,guide:10},tag:'하강 · 정착형',lengths:['20분','40분','60분·수면형'],theme:'산행 · 하루 · 사계',themes:{'산행':{mood:'맑은 공기 속을 오르고 내리는 하루의 산행',arc:['들머리 · 설렘과 맑은 공기, 발걸음 가볍게','오르막 · 차오르는 숨과 리듬','정상 · 탁 트인 고요, 성취의 평온','하산 · 해질녘 노곤한 안도, 잠으로']},'하루':{mood:'아침에서 밤으로 저물어가는 하루',arc:['아침 · 부드러운 깨어남, 첫 빛','낮 · 활동의 온기와 생기','저녁 · 노을, 잦아드는 하루','밤 · 적막과 깊은 잠']},'사계':{mood:'봄에서 겨울로 도는 한 해',arc:['봄 · 움트는 생명, 새싹','여름 · 무성한 생기','가을 · 성숙과 낙엽, 물듦','겨울 · 눈과 정적, 긴 잠']}},curve:[['진입','베타 18Hz',18,10],['이완','알파 12Hz',12,20],['하강','세타 8Hz',8,30],['소멸','델타 2Hz',2,40]],arr:[['기반','저음 드론 + 웜패드','전 구간, 하강 따라 두꺼워짐 ppp→pp'],['화성','피아노 단음 + 현 롱톤','이완~하강 진입'],['텍스처','자연음(사계/하루/산행)','전 구간 앰비언스'],['신호','싱잉볼','구간 전환 3회'],['유도','HP 바이노럴 18→12→8→2Hz / SP 다이나믹 감속','진입→소멸 연동']]},
+   '리셋':{scale:'경토리(솔·라·도·레·미) — 맑고 밝게 · W: 메이저 펜타토닉',mix:{nature:55,pad:35,guide:10},tag:'정화 · U자형',lengths:['3분·퀵','8분','30분·루프'],theme:'인간 · 시간 · 맑은 물',themes:{'인간':{mood:'마음의 응어리를 씻어내는 위로',arc:['방출 · 쌓인 감정 내려놓기','안정 · 따뜻한 위로, 다독임','환기 · 다시 마주할 용기']},'시간':{mood:'멈춘 시간에 다시 리듬을 넣는 환기',arc:['방출 · 멈춰선 시간','안정 · 고요한 정지의 틈','환기 · 다시 흐르는 시간']},'맑은 물':{mood:'물로 씻어내는 청량한 정화',arc:['방출 · 탁한 것 흘려보내기','안정 · 맑아진 웅덩이','환기 · 시원하게 솟는 샘']}},warn:'3분·퀵은 뇌파 동조(최소 4–5분)에 못 미침 → 호흡 리듬 정렬용으로 사용.',curve:[['방출','베타 20Hz',20,35],['안정','알파 10Hz',10,40],['환기','베타 18Hz',18,25]],arr:[['기반','밝은 패드(맑은 물 텍스처)','전 구간'],['화성','일렉피아노 코드','안정 구간 중심'],['리듬','소프트 퍼커션','방출·환기 가볍게'],['신호','벨','시작·종료'],['유도','HP 아이소크로닉 20→10→18Hz / 3분퀵=호흡 페이싱 톤만','U자']]},
+   '집중':{scale:'경토리 — 경쾌하되 큰 시김새 없이 · W: Dorian/펜타토닉',mix:{nature:60,pad:30,guide:10},tag:'진입 → 유지 · 중간 회복 · +마스킹',lengths:['50분','90분'],theme:'향 · 밀물썰물 · 비 오는 창가',themes:{'향':{mood:'은은한 향이 감도는 서재 — 변하지 않는 고요한 몰입'},'밀물썰물':{mood:'멀리서 반복되는 파도 — 규칙적 리듬이 잡생각을 씻어냄'},'비 오는 창가':{mood:'창밖 빗소리 — 백색소음이 방해음을 덮는 몰입'}},warn:'울트라디안 리듬 반영 — 중반 회복 디프(알파11)로 인지 피로를 풀고 후반 집중을 되살림. 뽀모도로를 뇌파로 옮긴 구조.',curve:[['진입','베타 14Hz',14,12],['몰입','베타 16Hz',16,20],['유지1','베타 16Hz',16,28],['회복','알파 11Hz',11,12],['유지2','베타 16Hz',16,28]],arr:[['기반','미니멀 드론(단일 지속음)','전 구간 균일'],['텍스처','핑크노이즈 마스킹(비/밀물썰물)','전 구간, 방해음 차폐'],['화성','변화 최소화(몰입 유지)','회복 구간만 살짝 완화'],['유도','HP 바이노럴 16Hz → 회복 구간 알파11 디프 → 16Hz 복귀','헤드폰']]}
+  }},
+ yoga:{label:'요가 & 명상',tier:'SPECIAL',ac:'#7F77DD',unit:'Hz',desc:'동경요가 70분 + 대중 요가·명상 6종.',
+  spaces:{'스튜디오':{mode:'빈야사 플로우',method:'스피커'},'라운지':{mode:'마음챙김 명상',method:'헤드폰'},'차안':{mode:'카 스트레칭',method:'스피커'},'집':{mode:'요가 니드라',method:'헤드폰'}},
+  methods:['스피커','헤드폰'],
+  modes:{
+   '동경요가':{scale:'평조(솔·라·도·레·미) — 밝고 평온, 담담하게',tag:'70분 시그니처 · 5구간 연속 ★',lengths:['70분'],theme:'끊김 없는 하나의 흐름 · 감성적(비운동적) · 음악만으로 동작 전환 인지 → 강사 큐잉 최소화',warn:'대표 컨셉: 회원이 음악만 들어도 수업 흐름을 느끼고, 강사 큐잉이 줄어도 전환 타이밍을 인지하는 동경요가만의 시그니처. 5구간 크로스페이드로 하나의 흐름 유지 · 선율 샘플 피치 보정 전제.',curve:[['호흡명상','알파 10Hz',10,14],['몸풀기','알파 12Hz',12,29],['본동작','알파 11Hz',11,36],['사바사나','델타 3Hz',3,14],['마무리','베타 13Hz',13,7]],arr:[['호흡명상','0–10분 · BPM 60–70 · 여백·공간감 위주(박자감 최소) · 웜패드+싱잉볼','안정·요가 진입'],['몸풀기','10–30분 · 리듬 점진 등장(빠르지 않게, 요가 느낌) · 핸드팬+기타','관절·근육 깨우기'],['본동작','30–55분 · 일정한 리듬 유지 · ★띵샤 30초 전환 · 이중 리드 선율 · 감성적, 비운동적','집중·몰입'],['사바사나','55–65분 · BPM 거의 없음 · 패드+피아노+싱잉볼 · 여운','깊은 이완'],['마무리','65–70분 · 잔잔+희망적·따뜻함 · 일상 복귀 · 피아노+현','각성 복귀']]},
+   '빈야사 플로우':{tag:'동적 · 호흡+움직임 · 종형',lengths:['30분','60분','75분'],theme:'D–A–Bm–G · 태양경배 반복, 호흡=템포',curve:[['웜업','알파 10Hz',10,20],['빌드','베타 13Hz',13,25],['피크','베타 16Hz',16,35],['쿨다운','알파 9Hz',9,20]],arr:[['기반','드론(D)+신스 패드','상시'],['화성','일렉기타/신스(D–A–Bm–G)','상시'],['리드','핸드팬','플로우~피크'],['리듬','프레임드럼 그루브(호흡=템포)','빌드부터, 피크 최대'],['유도','HP 아이소크로닉 10→16→9Hz / SP 템포·다이나믹','종형']]},
+   '하타':{tag:'느림·기초 · 알파 중심',lengths:['45분','60분'],theme:'C–G–Am–F · 자세 정렬·호흡',curve:[['정렬','알파 11Hz',11,25],['유지','알파 10Hz',10,45],['이완','세타 8Hz',8,30]],arr:[['기반','웜패드(C–G–Am–F)','상시'],['리드','리드 롱톤','간헐'],['신호','싱잉볼','자세 전환'],['유도','HP 바이노럴 11→10→8Hz','헤드폰']]},
+   '인·리스토러티브':{tag:'정적 · 3–5분 홀드 · 세타',lengths:['45분','60분'],theme:'Am7–Fmaj7 · 결합조직 이완 · 소리 최소',curve:[['이완','알파 9Hz',9,25],['침잠','세타 7Hz',7,40],['정착','세타 6Hz',6,35]],arr:[['기반','드론(Am7–Fmaj7) 최소','상시 ppp'],['신호','싱잉볼','3–5분 홀드마다 1타'],['텍스처','앰비언스 최소','—'],['유도','HP 바이노럴 9→7→6Hz','헤드폰']]},
+   '마음챙김 명상':{tag:'좌식 · 주의 훈련 · 알파→세타',lengths:['5분','10분','15분','20분'],theme:'단음 드론+싱잉볼 · 호흡 관찰·바디스캔',warn:'5분은 각 단계 1~2분 → 뇌파 유도보다 음성 가이드 명상으로 성립.',curve:[['안착','알파 11Hz',11,25],['몰입','알파 10Hz',10,45],['고요','세타 7Hz',7,30]],arr:[['기반','단음 드론','상시 균일'],['신호','싱잉볼','시작·바디스캔 전환'],['유도','HP 아이소크로닉 11→10→7Hz','헤드폰'],['보이스','(선택) 가이드 나레이션 슬롯','호흡·바디스캔']]},
+   '요가 니드라':{scale:'계면조 — 깊은 표현, 요성 절제',mix:{nature:60,pad:25,guide:15},tag:'누워서·가이드 · 베타→델타 하강 ★',lengths:['10분·NSDR','20분','30분','45분'],theme:'Am7–Fmaj7 · 요가 수면, 4단계 순차 하강',warn:'효과는 델타 정착 시간에서 나옴 — 10분·NSDR은 세타까지만 노려도 무방. 30분+에서 델타 충분 확보.',curve:[['진입','베타 15Hz',15,17],['이완','알파 10Hz',10,27],['하강','세타 6Hz',6,26],['니드라','델타 3Hz',3,30]],arr:[['기반','패드(Am7–Fmaj7) 하강','상시'],['화성','피아노 단음','간헐'],['신호','싱잉볼','단계 전환 3회'],['유도','HP 바이노럴 15→10→6→3Hz 순차','델타 정착 최장'],['보이스','(선택) 니드라 스크립트','바디스캔·이완']]},
+   '카 스트레칭':{tag:'차 안 · 앉아서 · 각성 유지',lengths:['5분','10분'],theme:'목·어깨 스트레칭 + 호흡 · 앉은 자세 · 운전 전후 리셋',warn:'운전 안전상 졸음 유발 금지 → 델타·깊은 세타 배제, 각성 복귀로 마무리. 동작은 정차 중에만.',curve:[['이완','알파 10Hz',10,50],['각성','베타 13Hz',13,50]],arr:[['기반','가벼운 패드','상시'],['리드','리드 짧은 프레이즈','간헐'],['신호','벨','시작·종료'],['유도','SP 아이소크로닉 10→13Hz 각성 복귀','스피커']]}
+  }},
+ running:{label:'러닝',tier:'SPECIAL',ac:'#D85A30',unit:'BPM',desc:'D메이저 · 리드 선율 EDM(악기 자유) · 골전도 · 1보=1비트 페이스메이커.',
+  spaces:{'야외':{mode:'STEADY',method:'골전도'},'러닝머신':{mode:'FULL 30',method:'골전도'},'등산':{mode:'RECOVERY',method:'골전도'}},
+  methods:['골전도','헤드폰'],
+  modes:{
+   '걷뛰':{tag:'120↔150 · 입문 걷뛰',lengths:['20분·입문','30분','무제한 루프'],theme:'C25K식 걷기·뛰기 교대 · 완전 입문의 표준 · 걷기 케이던스 ~120 / 뛰기 ~150spm',warn:'걷기(120)↔뛰기(150) 전환은 음악 신호(전환 2마디 전 필·벨 예고)로. 회차가 쌓일수록 뛰기 구간을 늘려가는 게 걷뛰의 원칙 — 이 프리셋은 뛰기 2분/걷기 2분 균형형. 무제한 루프는 교대 사이클 반복.',curve:[['워밍 걷기','걷기 120',120,12],['뛰기 1','뛰기 150',150,10],['걷기 1','걷기 120',120,10],['뛰기 2','뛰기 150',150,10],['걷기 2','걷기 120',120,10],['뛰기 3','뛰기 150',150,10],['걷기 3','걷기 120',120,10],['뛰기 4','뛰기 150',150,12],['쿨 걷기','걷기 115',115,16]],arr:[['킥','걷기 구간 가볍게 · 뛰기 구간 또렷(4-on-floor) · 100~200Hz','교대 대비'],['패드','2마디 롱서스테인 · 메인진행(D-Bm7-G-A) · 걷기 구간 따뜻하게','상시'],['리드','뛰기 구간만 밝은 선율 · 걷기 구간은 비움 · D 펜타토닉','뛰기 신호'],['전환 신호','전환 2마디 전 필+벨 예고 — 걷기↔뛰기 준비','교대 지점'],['케이던스','비트=발걸음(걷기 120 / 뛰기 150)','골전도']]},
+   'RECOVERY':{tag:'150 · 회복주',lengths:['20분','30분','40분','무제한 루프'],theme:'회복주·조깅·걷기 섞기 · 75 격박 호환 · 케이던스 100~155spm',warn:'시간 버전은 워밍·쿨 램프 포함. 무제한 루프는 150 고정 본체만 심리스 반복 — 워밍업은 러너 스스로.',curve:[['워밍','140→150',150,10],['회복주','150 고정',150,80],['쿨','150→135',135,10]],arr:[['킥','220→85Hz 피치다운+새츄레이션 · 100~200Hz 중저음 · 4-on-floor 정박','상시(절대 안 빠짐)'],['베이스','톱니+사각 · 중음 150~280Hz(서브 없음) · R.R.O.R 그루브','상시'],['패드','톱니+삼각 디튠 · 2마디 롱서스테인 · 페달진행(D-G-D-A)','상시, 차분'],['리드','리드 롱톤(회복 무드) · D 펜타토닉','벌스 절제'],['자연음','한강·열린 귀 앰비언스','상시'],['케이던스','비트=발걸음(SPM=BPM=150)','골전도']]},
+   'EASY':{tag:'160 · 이지/LSD',lengths:['20분','30분','40분','60분·LSD','90분·LSD','무제한 루프'],theme:'이지 런·LSD·대화 가능 페이스 · 일정 페이스가 본질 · 케이던스 155~168spm',warn:'이지런은 일정 페이스가 훈련의 정의 — 본체는 160 고정. 시간 버전만 앞뒤 램프. 무제한 루프는 160 고정 본체 반복.',curve:[['워밍','145→160',160,10],['이지','160 고정',160,80],['쿨','160→140',140,10]],arr:[['킥','220→85Hz 피치다운 · 100~200Hz · 4-on-floor 정박','상시'],['베이스','중음 150~280Hz · R.R.O.R 그루브','상시'],['패드','2마디 롱서스테인 · 흐름진행(Em7-A-D-G)','상시'],['리드','리드 선율 · D 펜타토닉 · 절제된 무드','벌스 절제'],['자연음','한강 앰비언스','상시'],['케이던스','비트=발걸음(160)','골전도']]},
+   'STEADY':{tag:'170 · 기본 ★',lengths:['20분','30분','40분','60분','무제한 루프'],theme:'기본 러닝 · 가장 수요 큰 핵심 트랙 · 30분≈데일리 5K / 60분≈10K급(페이스 따라 상이) · 케이던스 170~178spm',warn:'시간 버전 = 워밍 램프 → 170 유지 본체 → 쿨 램프. 무제한 루프는 170 고정 본체(40마디 루프)만 반복 — STEADY 170 시트 참조.',curve:[['워밍','148→170',170,15],['유지','170 고정',170,75],['쿨','170→138',138,10]],arr:[['킥','220→85Hz 피치다운+새츄 · 100~200Hz · 4-on-floor(0·4·8·12)','상시'],['베이스','톱니+사각 150~280Hz · R.R.O.R 당김(step7)','상시'],['하이햇','8분 또렷+16분 고스트','벌스·코러스'],['패드','2마디 롱서스테인 · 메인진행(D-Bm7-G-A)','상시'],['리드','리드 선율 · D 펜타토닉 E5→D5→D5→C#5 · 벌스 절제/코러스 치고나감','벌스/코러스 대비'],['케이던스','비트=발걸음(170)','골전도']]},
+   'TEMPO':{tag:'175 · 역치/템포런',lengths:['30분','40분·클래식','60분·롱 템포','무제한 루프'],theme:'템포런 · 젖산역치 근처 \'힘들지만 유지 가능\' 페이스 · 케이던스 170~178spm',warn:'클래식 템포런 = 이지 워밍업 → 역치 블록(고정) → 쿨다운. 40분·클래식이 정석(10+20+10). 무제한 루프는 역치 블록(175 고정)만 — 반드시 앞뒤 워밍업·쿨다운을 직접 챙기세요.',curve:[['워밍·이지','150→167',167,25],['역치 블록','175 고정',175,50],['쿨','170→140',140,25]],arr:[['킥','220→85Hz · 100~200Hz · 4-on-floor 정박','상시'],['베이스','중음 150~280Hz · R.R.O.R','상시'],['하이햇','8분+16분 고스트','역치 블록'],['패드','상승진행(G-A-Bm7-D) · 계단식','역치 블록 강조'],['리드','리드 선율 · D 펜타토닉 · 꾸준한 추진감','역치 블록'],['케이던스','비트=발걸음(워밍 이지→역치 175)','골전도']]},
+   'POWER':{tag:'180 · 인터벌/레이스',lengths:['10분·인터벌','20분·인터벌','30분·인터벌','무제한 루프'],theme:'인터벌 = 질주↔회복 교대 · VO₂max·스피드 · 케이던스 176~186spm',warn:'인터벌은 질주(180)와 회복(152)의 의식적 교대라 5% 규칙 예외(러너가 의도적으로 전환). 고강도 훈련일수록 워밍업 필수 — 워밍 비중을 크게 잡고, 질주:회복=1:1(실전 표준 비율). 전환 신호는 크래시(질주 진입)·레이어 감쇠(회복 진입)로 직관적으로 — 사이렌류 효과음은 브랜드 결에 안 맞아 배제. 시간 버전 = 워밍 → 질주×3 교대 → 쿨. 무제한 루프는 180 고정(레이스 페이스 유지용).',curve:[['워밍','150→166',166,18],['질주 1','180',180,11],['회복 1','152',152,11],['질주 2','180',180,11],['회복 2','152',152,11],['질주 3','180',180,11],['쿨','160→135',135,27]],arr:[['킥','220→85Hz+새츄 · 100~200Hz 펀치 · 4-on-floor','상시(질주·회복 모두)'],['베이스','톱니+사각 150~280Hz · R.R.O.R 당김','상시'],['하이햇','8분+16분 고스트','질주 구간'],['클랩','노이즈 4겹+리버브 · 2·4박(4·12)+8마디 필','질주(코러스)'],['드롭(킥 유지형)','질주 진입 직전 1마디 필+스윕(킥 유지) → 터짐','질주 1·2·3 진입'],['크래시','노이즈+금속배음 1.7s · 질주 시작마다','질주 진입 신호'],['리드','리드 치고나감(강렬·청량) · D 펜타토닉','질주 구간'],['케이던스','비트=발걸음(질주 180 / 회복 152)','골전도']]},
+   '파틀렉':{tag:'150↔175 · 스피드 플레이',lengths:['20분','30분','무제한 루프'],theme:'파틀렉(스웨덴어 \'속도 놀이\') · 빠름과 느림을 자유롭게 오가는 연속 러닝 · 인터벌보다 느슨하고 감각적',warn:'구간 길이가 일부러 불규칙 — 정확한 페이스보다 감각적 변속이 파틀렉의 본질. 강도 전환은 의식적이라 5% 규칙 예외. 걷지 않고 계속 달리며 변속.',curve:[['워밍','145→155',155,15],['빠르게','172',172,10],['천천히','150',150,12],['빠르게','168',168,8],['천천히','152',152,12],['빠르게','175',175,10],['천천히','150',150,13],['쿨','145→135',135,20]],arr:[['킥','220→85Hz 피치다운 · 4-on-floor 정박 유지 · 100~200Hz','상시(변속에도 안 끊김)'],['베이스','중음 150~280Hz · R.R.O.R','상시'],['리드','빠름=치고나감 / 느림=절제 — 자유 변주 · D 펜타토닉','변속 신호'],['패드','흐름진행(Em7-A-D-G) · 변속에도 화성은 이어짐','상시'],['케이던스','비트=발걸음(150↔175 자유 변속)','골전도']]},
+   '프로그레션':{tag:'145→178 · 점진 가속',lengths:['20분','30분','40분'],theme:'천천히 시작해 강하게 끝내는 네거티브 스플릿 · 롱 런의 권장 주법 · 페이스 조절력·막판 스퍼트 훈련',warn:'프로그레션은 끝이 정점이라 무제한 루프 없음. 가속은 구간마다 5% 이내 램프로 매끄럽게, 마지막 스트롱 후 짧은 쿨로 착지.',curve:[['워밍','145→155',155,15],['이지','155→162',162,25],['미디엄','162→170',170,30],['스트롱','170→178',178,20],['쿨','178→135',135,10]],arr:[['킥','220→85Hz 피치다운 · 4-on-floor · 100~200Hz','전 구간'],['베이스','중음 150~280Hz · R.R.O.R','이지부터'],['하이햇','8분+16분 고스트','미디엄부터'],['패드','상승진행(G-A-Bm7-D) · 계단식으로 두께 증가','에너지 더하기'],['리드','구간 오를수록 강조 — 절제→치고나감 · D 펜타토닉','미디엄~스트롱'],['드롭(킥 유지형)','직전 1마디 필+스윕(킥 유지) → 터짐','스트롱 진입 · 마지막 기어'],['오토메이션','BPM 곡선 수동 · 5% 이내 램프','구간 전환']]},
+   'QUICK 10':{tag:'프로그램 10분 · 초보 · 피크 없음',lengths:['10분'],theme:'완전 초보·입문 · 급가속 배제, 최고 166 BPM · 5% 규칙',warn:'초보 배려로 피크 구간 제외 — 부드러운 곡선. 파워 없이 이지~메인까지만. 드롭 없음(초보 급가속 방지).',curve:[['워밍','140→150',150,25],['이지','150→162',162,25],['메인','162→166',166,30],['쿨','166→135',135,20]],arr:[['킥','220→85Hz 피치다운 · 4-on-floor 정박(절대 안 빠짐) · 100~200Hz','전 구간'],['패드','메인진행 · 필터 천천히 열림','전 구간'],['리드','완만한 리드 선율 · D 펜타토닉','메인'],['오토메이션','BPM 곡선 수동 · 5% 이내 매끄럽게','구간 전환'],['케이던스','비트=발걸음, 급가속 없음','골전도']]},
+   'STEADY 20':{tag:'프로그램 20분 · 기본',lengths:['20분'],theme:'기본 러닝 프로그램 · 워밍~스테디까지, 가장 무난 · 5% 규칙',curve:[['워밍','145→158',158,20],['빌드','158→170',170,25],['메인','170→175',175,35],['쿨','175→135',135,20]],arr:[['킥','220→85Hz 피치다운 · 4-on-floor 정박 · 100~200Hz','전 구간'],['베이스','R.R.O.R 그루브 150~280Hz','벌스부터'],['하이햇','8분+16분 고스트','빌드부터'],['패드','메인진행(D-Bm7-G-A) 2마디 전환','전 구간'],['리드','리드 선율 — 벌스 절제 → 빌드~메인 강조','레이어 고조'],['오토메이션','BPM 곡선 수동 · 5% 이내','구간 전환']]},
+   'FULL 30':{tag:'프로그램 30분 · 표준 ★',lengths:['30분'],theme:'표준 프로그램 · 워밍업~피크~쿨다운 완전 여정 · 5K·건강 러닝 중심 · S자 곡선',warn:'구간: 몸깨우기[0-4]→레이어고조[4-9]→STEADY코어[9-20]→스퍼트[20-25]→회복착지[25-30]. 5% 규칙 검산 완료. 피크(20–25분)는 5K의 \'마의 구간\'(체력 저하·포기 욕구 정점)과 겹침 — 에너지를 여기에 몰아주는 이유.',curve:[['워밍','142→155',155,13],['빌드','155→168',168,17],['메인','168→176',176,37],['피크','176→182',182,17],['쿨','182→130',130,16]],arr:[['킥','220→85Hz 피치다운+새츄 · 4-on-floor 정박(킥 빠지는 드롭·라이저 금지) · 100~200Hz','전 구간'],['드롭(킥 유지형)','직전 1~2마디 필터 스윕+스네어 필(킥은 정박 유지) → 전 레이어 터짐','피크 진입 20:00 · 마의 구간 돌파'],['베이스','톱니+사각 150~280Hz · R.R.O.R 당김','벌스부터'],['하이햇','8분 또렷+16분 고스트','빌드부터'],['클랩','4겹+리버브 2·4박','코러스(메인·피크)'],['크래시','금속배음 1.7s · 8마디마다','코러스 시작'],['패드','메인진행→피크 청량(Gmaj9 절정) · 필터 열림','에너지 더하기'],['리드','리드 선율 · D 펜타토닉 · 벌스 절제/코러스 치고나감','벌스/코러스 대비'],['오토메이션','BPM 곡선 수동 S자 · 5% 이내','구간 전환']]},
+   'LONG 40':{tag:'프로그램 40분 · 중급',lengths:['40분'],theme:'중급 · 메인 길게(17분)+피크 · 장거리·지구력 · 5% 규칙',warn:'메인 구간을 길게 유지해 지구력 훈련. 피크 후 긴 쿨다운으로 안전 착지.',curve:[['워밍','140→153',153,13],['빌드','153→166',166,15],['메인','166→176',176,42],['피크','176→184',184,15],['쿨','184→128',128,15]],arr:[['킥','220→85Hz 피치다운 · 4-on-floor 정박 · 100~200Hz','전 구간'],['드롭(킥 유지형)','직전 1~2마디 필+스윕(킥 유지) → 터짐','피크 진입 25:00 · 마지막 스퍼트'],['베이스','R.R.O.R 그루브 150~280Hz','벌스부터'],['하이햇','8분+16분 고스트','빌드부터'],['클랩','4겹+리버브','코러스'],['크래시','8마디마다','코러스 시작'],['패드','메인 길게 평평(미세상승)→피크','메인 최대화'],['리드','리드 프레이즈 교대 · D 펜타토닉 · 장거리 지루함 방지','벌스/코러스 교대'],['오토메이션','BPM 곡선 수동 · 5% 이내','구간 전환']]}
+  }},
+ pairing:{label:'사운드 페어링',tier:'SPECIAL',ac:'#D4537E',unit:'Hz',desc:'SOUND OASIS LAB × GENERAL PAUSE · 소리를 재료로 — 맛 변조(①)+신경 조율(②)을 한 설계에 · Eat·Drink·Diet · 넓은 입구(범용 팔레트), 깊은 우물(시그니처).',
+  spaces:{'레스토랑':{mode:'Eat 먹을 때',method:'헤드폰'},'홈 다이닝':{mode:'Drink 마실 때',method:'헤드폰'},'카페·바':{mode:'Diet 안 먹을 때',method:'헤드폰'}},
+  methods:['스피커','헤드폰'],
+  modes:{
+   'Eat 먹을 때':{tag:'맛의 증폭 · 유입',lengths:['요리별 3–5분','코스 세트'],theme:'메커니즘 ①(미각 변조) 주인공 · 진입은 분식 — 짜파게티=스타카토 · 요리당 3–5분 × 코스',sci:'소닉 시즈닝(찰스 스펜스) — 같은 음식도 소리에 따라 맛 강도가 달라진다(토피 실험 약 ±10%). 미각 증강이 목적이라 시간=요리 지속시간. 뇌파 곡선 불필요.',warn:'검증(스펜스·Mesz): 높은음↔단맛·신맛 / 낮은음↔쓴맛·짠맛·감칠맛 / 스타카토↔짠맛 / 레가토↔쓴맛 / 빠름·불협↔신맛 / 협화·느림↔단맛. 가설(연구 과제): 시김새 번역 — 퇴성=쓴맛 · 대점·끊는 타법=짠맛 · 농현=신맛 · 추성=단맛. 확장 사다리: 분식(유입)→한식·커피·디저트→명상·수면(치유 코어)→깊이(시그니처). 분식은 입구지 목적지가 아님 — 콘텐츠마다 \'왜?\' 근거 한 줄을 얹어 웃긴 실험이 아니라 근거 있는 설계로.',arr:[['기반','미니멀 패드 — 요리를 가리지 않게','상시'],['맛-음높이','단맛·신맛=높은 음역 / 쓴맛=낮은 음역 / 짠맛·감칠맛=중저음','검증 완료'],['맛-주법','짠맛=스타카토·끊음 / 쓴맛=레가토·이어짐 / 신맛=빠름+불협 한 방울 / 단맛=협화·느림·부드러움','검증 완료(Mesz)'],['시김새 번역','퇴성=쓴 · 대점=짠 · 농현=신 · 추성=단 — 한 음 안의 미세 변조로 맛을 조각','가설 · 연구 과제'],['리드','높은 음역 반짝이는 리드(단맛·디저트 강조) — 악기 자유','요리별'],['텍스처','식기·공간음','앰비언스']]},
+   'Drink 마실 때':{tag:'분위기·이완 · 한 잔을 더 깊게',lengths:['10분','15분·한 잔'],theme:'혼술·차 한 잔의 분위기 — 와인 페어링의 소리 버전 · 한 잔 소비시간',warn:'같은 술도 부드러운 소리에선 더 둥글게, 거친 소리에선 더 스파이시하게(스펜스 계열). 전달은 QR→손님 폰+개인 이어폰이 최선 — 공간 부담 0, 바이노럴 유지. 매장 스피커는 진입장벽 0 대신 바이노럴 포기.',sci:'같은 술도 부드러운 음악에선 더 둥글게, 거친 소리엔 더 스파이시하게 느껴진다(스펜스 계열). 와인 페어링 문화가 이미 있어 진입이 쉽다.',arr:[['기반','따뜻한 패드','상시'],['질감-풍미','부드러움=둥근 풍미 / 거친 질감=스파이시 — 술의 성격에 맞춰 선택','검증 계열'],['화성','재즈/앰비언트 코드 · 느슨한 협화','상시'],['텍스처','잔·액체 텍스처','앰비언스']]},
+   'Diet 안 먹을 때':{scale:'평조 기본 — 상황 따라 자유',mix:{nature:75,pad:20,guide:5},tag:'허기를 다스리게 · 치유 코어',lengths:['15분','20분'],theme:'메커니즘 ②(자율신경) 주인공 · 음식 없이 성립하는 유일한 라인 — 치유 코어와 최단 거리',sci:'바이노럴(자율신경 안정)로 공복의 짜증·충동을 눅인다. 개인 이어폰에서 효과 극대(QR 방식 권장).',warn:'가설 포함: 이완된 자율신경이 미각·식욕을 실제로 바꾸는지는 미개척 영역 — ①+②의 상승효과가 곧 이 랩의 연구 주제.',curve:[['충동','베타 18Hz',18,30],['안정','알파 10Hz',10,45],['진정','알파 8Hz',8,25]],arr:[['기반','저음 드론','상시'],['신호','싱잉볼','충동 완화 포인트'],['유도','HP 바이노럴 18→10→8Hz 하강','자율신경 안정']]}
+  }}
+};
+var s={lineup:'therapy',space:null,method:null,mode:null,length:null,struct:'descent',theme:null,step:1,done:false,picked:{space:false,method:false,mode:false,length:false}},showSpec=false;
+function applySpace(sp){var d=L[s.lineup].spaces[sp];s.space=sp;s.mode=d.mode;s.method=d.method;s.struct='descent';var tm=L[s.lineup].modes[d.mode].themes;s.theme=tm?Object.keys(tm)[0]:null;s.length=L[s.lineup].modes[d.mode].lengths[0];}
+function nextStep(type){var o=stepOrder();return o.indexOf(type)+2;}
+function selLineup(k){s.lineup=k;applySpace(Object.keys(L[k].spaces)[0]);s.picked={space:false,method:false,mode:false,length:false};s.step=1;s.done=false;showSpec=false;render();}
+function selSpace(sp){applySpace(sp);s.picked.space=true;s.picked.method=false;s.picked.mode=false;s.picked.length=false;s.step=2;showSpec=false;render();}
+function selMethod(m){s.method=m;s.picked.method=true;s.step=3;showSpec=false;render();}
+function selMode(m){s.mode=m;s.picked.mode=true;s.picked.length=false;s.struct='descent';var tm=L[s.lineup].modes[m].themes;s.theme=tm?Object.keys(tm)[0]:null;s.length=L[s.lineup].modes[m].lengths[0];s.step=4;showSpec=false;render();}
+function selStruct(k){s.struct=k;render();}
+function selTheme(k){s.theme=k;render();}
+function selLength(x){s.length=x;s.picked.length=true;s.step=99;s.done=true;showSpec=false;render();}
+function editStep(i){s.step=i;showSpec=false;render();}
+function toggleSpec(){showSpec=!showSpec;render();}
+function copySpec(){var t=document.getElementById('specTxt').innerText;navigator.clipboard&&navigator.clipboard.writeText(t);var b=document.getElementById('cpyBtn');b.innerText='복사됨 ✓';setTimeout(function(){b.innerText='사양 텍스트 복사';},1500);}
+window._sw={selLineup:selLineup,selSpace:selSpace,selMethod:selMethod,selMode:selMode,selStruct:selStruct,selTheme:selTheme,selLength:selLength,editStep:editStep,toggleSpec:toggleSpec,copySpec:copySpec,exportJSON:exportJSON,exportMIDI:exportMIDI};
+
+var STR={descent:{n:'하강형',d:'완만히 목표까지 내려가 정착'},deep:{n:'심층형',d:'빠르게 도달 후 깊이 오래 머묾'},wave:{n:'파동형',d:'내렸다 올렸다 반복'}};
+function band(hz){return hz>=30?'감마':hz>=13?'베타':hz>=8?'알파':hz>=4?'세타':'델타';}
+function lbl(hz){return band(hz)+' '+hz+'Hz';}
+function isDescent(cv){if(!cv||cv.length<2)return false;for(var i=1;i<cv.length;i++){if(cv[i-1][2]<cv[i][2])return false;}return cv[0][2]>cv[cv.length-1][2];}
+function gmean(a,b){return Math.max(1,Math.round(Math.sqrt(a*b)));}
+function makeVariant(base,kind){
+ var hi=base[0][2],lo=base[base.length-1][2],mid=gmean(hi,lo);
+ if(kind==='deep')return [['진입',lbl(hi),hi,10],['급강하',lbl(mid),mid,15],['심층',lbl(lo),lo,35],['정착',lbl(lo),lo,40]];
+ if(kind==='wave'){var rb=gmean(mid,hi);return [['도입',lbl(hi),hi,20],['침잠',lbl(lo),lo,30],['반등',lbl(rb),rb,20],['재침잠',lbl(lo),lo,30]];}
+ return base;
+}
+function hasVariants(){if(L[s.lineup].unit==='BPM')return false;var b=L[s.lineup].modes[s.mode].curve;return !!(b&&isDescent(b));}
+function hasThemes(){return !!L[s.lineup].modes[s.mode].themes;}
+function themeOf(){var tm=L[s.lineup].modes[s.mode].themes;return tm&&s.theme?tm[s.theme]:null;}
+function curOf(){var b=L[s.lineup].modes[s.mode].curve;if(b&&isDescent(b)&&s.struct&&s.struct!=='descent')return makeVariant(b,s.struct);return b;}
+function asmrRec(){
+ var lp=L[s.lineup],cv=curOf();
+ if(lp.unit==='BPM')return {n:'한강 물결 + 바람',r:'SUM WAVE DNA · 넓은 공간감 유지'};
+ if(s.mode==='동경요가')return {n:'한강 물결 + 바람 (구간별 밀도 조절)',r:'70분 내내 하나의 공간감 · SUM WAVE 시그니처'};
+ if(s.mode==='카 스트레칭')return {n:'잔잔한 물소리 (밝은 톤)',r:'각성 유지 필요 · 너무 이완적이면 운전 위험'};
+ if(!cv)return {n:'아주 낮은 공간 톤 + 미세 실내 앰비언스',r:'미각이 주인공 · 자연음 존재감 최소'};
+ var hi=cv[0][2],lo=cv[cv.length-1][2],desc=isDescent(cv);
+ var peak=Math.max.apply(null,cv.map(function(c){return c[2];}));
+ var first=cv[0][2];
+ if(lo<=3)return {n:'낮은 바람 · 밤 풀벌레 먼 배경 · 폭포 저역',r:'저역 중심이라 델타 정착 방해 안 함'};
+ if(desc)return {n:'잔잔한 빗소리 · 먼 파도 · 시냇물 저역',r:'핑크노이즈에 가까워 뇌를 가라앉힘 · 규칙적이고 예측 가능'};
+ if(peak-first>=3)return {n:'아침 숲 앰비언스(새소리 은은히) · 밝은 시냇물',r:'각성 방향 생기 · 새소리는 배경으로만'};
+ return {n:'일정한 계류 흐름 · 가랑비',r:'마스킹으로 방해음 차폐 · 균일해 몰입 유지'};
+}
+function stepOrder(){return ['space','method','mode','length'];}
+function parseMin(len){if(/무제한|요리별|코스/.test(len))return null;var m=len.match(/(\d+)\s*분/);return m?+m[1]:null;}
+// ── 구현용 구간 수치: [{name,tStart,tEnd,vStart,vEnd}] ──
+function specSegments(){
+ var lp=L[s.lineup],cv=curOf();if(!cv)return null;
+ var total=parseMin(s.length);var loop=false;
+ if(total===null){total=20;loop=true;} // 무제한 루프는 20분 기준으로 수치화
+ var wsum=cv.reduce(function(a,c){return a+c[3];},0)||100;
+ var t=0,prev=null,out=[];
+ cv.forEach(function(c){
+  var dur=total*c[3]/wsum;
+  var m=/^(\d+(?:\.\d+)?)→(\d+(?:\.\d+)?)/.exec(c[1]);
+  var vS,vE=c[2];
+  if(m){vS=parseFloat(m[1]);vE=parseFloat(m[2]);}
+  else{vS=(lp.unit==='BPM'&&prev!==null)?prev:c[2];vS=(lp.unit==='BPM')?vS:c[2];}
+  out.push({name:c[0],label:c[1],tStart:t,tEnd:t+dur,vStart:vS,vEnd:vE});
+  t+=dur;prev=vE;
+ });
+ out._loop=loop;return out;
+}
+// ── JSON 내보내기 ──
+function buildSpecJSON(){
+ var lp=L[s.lineup],md=lp.modes[s.mode],segs=specSegments();
+ var o={format:'sumwave-spec',version:1,
+  lineup:lp.label,mode:s.mode,path:{space:s.space,method:s.method,length:s.length},
+  unit:lp.unit||null,loop:segs?!!segs._loop:false,
+  totalMin:segs?+(segs[segs.length-1].tEnd).toFixed(2):null,
+  segments:segs?segs.map(function(g){return{name:g.name,label:g.label,tStartMin:+g.tStart.toFixed(2),tEndMin:+g.tEnd.toFixed(2),vStart:g.vStart,vEnd:g.vEnd,ramp:g.vStart===g.vEnd?'hold':'linear'};}):null,
+  scale:md.scale||null,mix:md.mix||null,theme:s.theme||null,
+  guidance:(lp.unit==='Hz')?{headphone:'binaural',carrierHz:200,speaker:'isochronic-tremolo',deltaRule:'hz<=3.5 구간 펄스 유도 제거',boundaryRampSec:90}:null,
+  layers:md.arr?md.arr.map(function(a){return{track:a[0],spec:a[1],when:a[2]};}):null,
+  notes:md.warn||null};
+ return o;
+}
+function dlBlob(data,name,type){var b=new Blob([data],{type:type});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},300);}
+function exportJSON(){var o=buildSpecJSON();dlBlob(JSON.stringify(o,null,2),'SUMWAVE_'+s.mode.replace(/\s/g,'')+'_'+(parseMin(s.length)||'loop')+'min.json','application/json');}
+// ── MIDI 내보내기 (템포맵+마커+코드 가이드) ──
+function vlq(n){var b=[n&0x7f];while(n>>=7)b.unshift((n&0x7f)|0x80);return b;}
+function str2b(t){var b=[];for(var i=0;i<t.length;i++){var c=t.charCodeAt(i);if(c<128)b.push(c);else{var e=unescape(encodeURIComponent(t[i]));for(var j=0;j<e.length;j++)b.push(e.charCodeAt(j));}}return b;}
+function meta(dt,type,bytes){return vlq(dt).concat([0xFF,type],vlq(bytes.length),bytes);}
+function keySig(md){
+ // 선법/코드에서 으뜸음·장단 추정 → MIDI 조표(sf: -7..7, mi:0/1)
+ var scale=(md&&md.scale)||'';var root='D',minor=false,modeName='';
+ var mm=/([A-G][#b]?)/.exec(scale);
+ // 우리 라인 기본: 러닝·명상 다수 D 계열
+ if(/계면조/.test(scale)){root='D';minor=true;modeName='계면조';}
+ else if(/평조/.test(scale)){root='D';minor=false;modeName='평조';}
+ else if(/경토리/.test(scale)){root='G';minor=false;modeName='경토리';}
+ else if(/메나리/.test(scale)){root='A';minor=true;modeName='메나리토리';}
+ // 코드 진행에서 으뜸음 보정(첫 코드)
+ var prog=findProg(md);
+ if(prog&&prog.length){var c=/([A-G][#b]?)(m)?/.exec(prog[0]);if(c){root=c[1];if(c[2])minor=true;}}
+ var SF={'C':0,'G':1,'D':2,'A':3,'E':4,'B':5,'F#':6,'C#':7,'F':-1,'Bb':-2,'Eb':-3,'Ab':-4,'Db':-5,'Gb':-6};
+ var MIN={'A':0,'E':1,'B':2,'F#':3,'C#':4,'G#':5,'D#':6,'D':-1,'G':-2,'C':-3,'F':-4,'Bb':-5,'Eb':-6};
+ var sf=minor?(MIN[root]!==undefined?MIN[root]:0):(SF[root]!==undefined?SF[root]:0);
+ return {sf:sf,mi:minor?1:0,root:root,minor:minor,mode:modeName};
+}
+var CHORD_RE=/([A-G][#b]?)(maj7|m7|sus2|sus4|m|7)?/;
+var SEMI={C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+function chordNotes(sym){var m=CHORD_RE.exec(sym.trim());if(!m)return null;var r=48+SEMI[m[1]];var q=m[2]||'';
+ var iv=q==='m'?[0,3,7]:q==='m7'?[0,3,7,10]:q==='maj7'?[0,4,7,11]:q==='7'?[0,4,7,10]:q==='sus2'?[0,2,7]:q==='sus4'?[0,5,7]:[0,4,7];
+ return iv.map(function(i){return r+i;});}
+function findProg(md){if(!md.arr)return null;for(var i=0;i<md.arr.length;i++){var m=/진행\(([^)]+)\)/.exec(md.arr[i][1]);if(m)return m[1].split(/[-–—]/).map(function(x){return x.trim();});}return null;}
+function exportMIDI(){
+ var lp=L[s.lineup],md=lp.modes[s.mode],segs=specSegments();if(!segs)return;
+ var PPQ=480,isBPM=lp.unit==='BPM';
+ // 시간→비트 적분 (BPM은 가변, Hz는 60BPM 고정=1비트/초)
+ var tempoEv=[],markEv=[],beats=0;
+ markEv.push({beat:0,txt:s.mode+' · '+s.length});
+ segs.forEach(function(g){
+  markEv.push({beat:beats,txt:g.name+' '+g.label});
+  var durS=(g.tEnd-g.tStart)*60;
+  if(!isBPM){tempoEv.push({beat:beats,bpm:60});beats+=durS/1;} // 60BPM: 1비트=1초
+  else{
+   var steps=g.vStart===g.vEnd?1:8;
+   for(var i=0;i<steps;i++){
+    var b0=g.vStart+(g.vEnd-g.vStart)*(i/steps);
+    tempoEv.push({beat:beats,bpm:b0});
+    var dt=durS/steps;beats+=b0*dt/60;
+   }
+  }
+ });
+ if(isBPM&&segs.length)tempoEv.push({beat:beats,bpm:segs[segs.length-1].vEnd});
+ markEv.push({beat:beats,txt:'끝'});
+ // 트랙0: 박자·템포·마커
+ var ev=[];ev.push({beat:0,raw:[0xFF,0x58,4,4,2,24,8]});
+ var ks=keySig(md);
+ ev.push({beat:0,raw:[0xFF,0x59,2,(ks.sf<0?ks.sf+256:ks.sf),ks.mi]});
+ if(ks.mode){var mt=str2b('선법: '+ks.mode+' ('+ks.root+(ks.minor?' minor':' major')+' 표기)');markEv.unshift({beat:0,txt:'선법: '+ks.mode});}
+ tempoEv.forEach(function(e){var us=Math.round(60000000/e.bpm);ev.push({beat:e.beat,raw:[0xFF,0x51,3,(us>>16)&255,(us>>8)&255,us&255]});});
+ markEv.forEach(function(e){var tb=str2b(e.txt);ev.push({beat:e.beat,raw:[0xFF,0x06].concat(vlq(tb.length),tb)});});
+ ev.sort(function(a,b){return a.beat-b.beat;});
+ var t0=[],last=0;ev.forEach(function(e){var tk=Math.round(e.beat*PPQ);t0=t0.concat(vlq(tk-last),e.raw);last=tk;});
+ t0=t0.concat([0,0xFF,0x2F,0]);
+ // 트랙1: 코드 가이드(진행 파싱, 없으면 구간 드론)
+ var prog=findProg(md);var t1=[],lastT=0,evN=[];
+ evN.push({beat:0,raw:[0xC0,88]}); // Pad 1
+ if(prog){
+  var ci=0,b=0;while(b<beats-0.01){var ns=chordNotes(prog[ci%prog.length])||[50];ci++;
+   var len=Math.min(8,beats-b); // 2마디 단위
+   ns.forEach(function(n){evN.push({beat:b,raw:[0x90,n,64]});});
+   ns.forEach(function(n){evN.push({beat:b+len,raw:[0x80,n,0]});});
+   b+=len;}
+ }else{
+  var root=md.scale&&md.scale.indexOf('계면조')>=0?45:md.scale&&(md.scale.indexOf('평조')>=0||md.scale.indexOf('경토리')>=0)?43:50;
+  var bb=0;segs.forEach(function(g){var durB=isBPM?0:(g.tEnd-g.tStart)*60;if(isBPM){for(var i=0;i<8;i++){durB+=0;}durB=(g.tEnd-g.tStart)*60*((g.vStart+g.vEnd)/2)/60;}
+   evN.push({beat:bb,raw:[0x90,root,56]});evN.push({beat:bb+durB,raw:[0x80,root,0]});bb+=durB;});
+ }
+ evN.sort(function(a,b){return a.beat-b.beat;});
+ evN.forEach(function(e){var tk=Math.round(e.beat*PPQ);t1=t1.concat(vlq(tk-lastT),e.raw);lastT=tk;});
+ t1=t1.concat([0,0xFF,0x2F,0]);
+ function chunk(id,body){var h=str2b(id);var L4=[(body.length>>24)&255,(body.length>>16)&255,(body.length>>8)&255,body.length&255];return h.concat(L4,body);}
+ var head=chunk('MThd',[0,1,0,2,(PPQ>>8)&255,PPQ&255]);
+ var bytes=new Uint8Array(head.concat(chunk('MTrk',t0),chunk('MTrk',t1)));
+ dlBlob(bytes,'SUMWAVE_'+s.mode.replace(/\s/g,'')+'_'+(parseMin(s.length)||'loop')+'min.mid','audio/midi');
+}
+function timeline(curve,total){
+ if(!total||curve.length<2)return null;
+ var raw=curve.map(function(c){return total*c[3]/100;});
+ var r=raw.map(function(v){return Math.max(1,Math.round(v));});
+ var diff=total-r.reduce(function(a,b){return a+b;},0);
+ if(diff!==0){var mi=0;for(var i=1;i<raw.length;i++){if(raw[i]>raw[mi])mi=i;}r[mi]=Math.max(1,r[mi]+diff);}
+ return curve.map(function(c,i){return [c[0],r[i]];});
+}
+function hexA(hex,a){var h=hex.replace('#','');var n=parseInt(h,16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+function timelineHTML(tl,total,ac){
+ var segs=tl.map(function(t,i){var w=(t[1]/total*100);var op=0.45+0.5*(i/(tl.length-1||1));return '<div class="tlseg" style="width:'+w.toFixed(2)+'%;background:'+hexA(ac,op)+'"><b>'+t[0]+'</b><span class="tm">'+t[1]+'분</span></div>';}).join('');
+ return '<div class="tl"><p class="sec">구간 타임라인 · 총 '+total+'분</p><div class="tlbar">'+segs+'</div><div class="tlnote">'+tl.map(function(t){return t[0]+' '+t[1]+'분';}).join(' · ')+'</div></div>';
+}
+function arrHTML(arr,ac){
+ var rows=arr.map(function(a){return '<div class="arow"><span class="alr" style="background:'+ac+'">'+a[0]+'</span><span class="act">'+a[1]+(a[2]&&a[2]!=='—'?' <span class="amu">· '+a[2]+'</span>':'')+'</span></div>';}).join('');
+ return '<div class="arr">'+rows+'</div>';
+}
+function specText(){var lp=L[s.lineup],md=lp.modes[s.mode];
+ var cv=curOf();
+ var structLine=hasVariants()?' · 구조 '+STR[s.struct].n+'('+STR[s.struct].d+')':'';
+ var th=themeOf();
+ var themeLine=th?'\n선택 테마: '+s.theme+' — '+th.mood+(th.arc?'\n구간 서사: '+th.arc.map(function(a,i){return (cv&&cv[i]?cv[i][0]+' ':'')+a;}).join(' / '):''):'';
+ var head=lp.label+' 라인 · 프리셋 사양\n─────────────────────\n'
+  +'경로: '+s.space+' → '+s.method+' → '+s.mode+structLine+' → '+s.length+'\n'
+  +'테마/구성: '+md.theme+themeLine;
+ // 1 시간 설계
+ var s1='';
+ if(cv){var seq=cv.map(function(c){return c[0]+'('+c[1]+')';}).join(' → ');s1='\n'+(lp.unit==='BPM'?'BPM 곡선: ':'뇌파 진행: ')+seq;
+  var tl=timeline(cv,parseMin(s.length));
+  if(tl)s1+='\n구간 배분: '+tl.map(function(t){return t[0]+' '+t[1]+'분';}).join(' · ');
+  if(hasVariants())s1+='\n(유도 레이어는 이 곡선을 따름)';
+  // 1.5 아크 수치 (구현용 정밀 사양)
+  var segs=specSegments();
+  if(segs){s1+='\n아크 수치('+(lp.unit==='BPM'?'BPM':'Hz')+'):';
+   segs.forEach(function(g){
+    s1+='\n· '+g.name+' '+g.tStart.toFixed(1)+'–'+g.tEnd.toFixed(1)+'분: '
+      +(g.vStart===g.vEnd?(g.vEnd+' 유지'):(g.vStart+'→'+g.vEnd+' 선형 램프'));
+   });
+   if(lp.unit!=='BPM')s1+='\n(구간 경계 전환은 60~120초 선형 램프)';
+  }
+ }
+ // 2 사운드 기반
+ var s2='\n청음 방식: '+M[s.method].note;
+ if(s.method==='스피커'){var nr=asmrRec();s2+='\n자연 ASMR 베이스: '+nr.n+' ('+nr.r+')';}
+ if(lp.unit==='Hz')s2+='\n청취 분기(유도): 헤드폰=바이노럴(캐리어 200Hz) / 스피커=아이소크로닉(패드 트레몰로) · 델타(≤3.5Hz) 구간은 펄스 유도 제거';
+ if(md.mix)s2+='\n볼륨 비율: 자연음 '+md.mix.nature+' : 패드 '+md.mix.pad+' : 유도 '+md.mix.guide+' (합 100)';
+ if(md.scale)s2+='\n선법: '+md.scale;
+ // 3 편곡
+ var s3='';
+ if(md.arr){s3='\n편곡 레이어(DAW 트랙):';md.arr.forEach(function(a){s3+='\n· '+a[0]+' — '+a[1]+(a[2]&&a[2]!=='—'?' ('+a[2]+')':'');});}
+ // 4 근거·검토
+ var s4='';
+ if(md.sci)s4+='\n근거: '+md.sci;
+ if(md.warn)s4+='\n※ 검토: '+md.warn;
+ return head
+  +'\n\n【1 · 시간 설계】'+s1
+  +'\n\n【2 · 사운드 기반】'+s2
+  +'\n\n【3 · 편곡 레이어】'+s3
+  +(s4?'\n\n【4 · 근거·검토】'+s4:'');
+}
+function curveSVG(curve,ac,unit){
+ var W=300,H=98,pad=28,n=curve.length,vals=curve.map(function(c){return c[2];});
+ var m0=n>1?/^(\d+(?:\.\d+)?)→/.exec(curve[0][1]):null;
+ var st=m0?parseFloat(m0[1]):null;
+ var all=st!==null?[st].concat(vals):vals;
+ var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);
+ if(mn===mx){mn=mn*0.9;mx=mx*1.1;}else{var r=mx-mn;mn-=r*0.14;mx+=r*0.14;}
+ if(unit==='Hz'&&mn<0.5)mn=0.5;
+ function tf(v){return unit==='Hz'?(Math.sqrt(v)-Math.sqrt(mn))/(Math.sqrt(mx)-Math.sqrt(mn)):(v-mn)/(mx-mn);}
+ function y(v){return H-10-tf(v)*(H-32);}
+ var total=all.length;
+ function px(j){return total===1?W/2:pad+j*((W-2*pad)/(total-1));}
+ var pts=all.map(function(v,j){return [px(j),y(v)];});
+ var line=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);}).join(' ');
+ var off=st!==null?1:0;
+ var dots=pts.map(function(p,j){if(st!==null&&j===0)return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="#fff" stroke="'+ac+'" stroke-width="2"/>';return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="'+ac+'" stroke="#fff" stroke-width="2"/>';}).join('');
+ var labs=curve.map(function(c,i){var j=i+off;var xx=px(j),an=total===1?'middle':(j===0?'start':(j===total-1?'end':'middle'));return '<text x="'+xx.toFixed(1)+'" y="'+(pts[j][1]-9).toFixed(1)+'" text-anchor="'+an+'" font-size="10.5" fill="#55594e" font-family="Noto Sans KR">'+c[1]+'</text>';}).join('');
+ var path=total>1?'<path d="'+line+'" fill="none" stroke="'+ac+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>':'';
+ return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:340px"><line x1="'+pad+'" y1="'+(H-8)+'" x2="'+(W-pad)+'" y2="'+(H-8)+'" stroke="#e2e5da"/>'+path+dots+labs+'</svg>';
+}
+function stepEl(i,title,val,bodyChips){
+ var active=(s.step===i);
+ var reached=(s.step>=i||s.done);
+ if(!reached)return '';
+ var cls='step'+(active?' act':'')+(!active&&reached?' done':'');
+ var head='<div class="shead" onclick="_sw.editStep('+i+')"><span class="snum">'+i+'</span><span class="sttl">'+title+'</span><span class="sval">'+(val||'')+'</span>'+(!active?'<span class="sedit">변경</span>':'')+'</div>';
+ var body=active?'<div class="sbody">'+bodyChips+'</div>':'';
+ return '<div class="'+cls+'">'+head+body+'</div>';
+}
+function render(){
+ var lp=L[s.lineup],ac=lp.ac,el=document.getElementById('app');el.style.setProperty('--ac',ac);
+ var tabs=Object.keys(L).map(function(k){var x=L[k];return '<div class="tab '+(k===s.lineup?'on':'')+'" style="--ac:'+x.ac+'" onclick="_sw.selLineup(\''+k+'\')"><span class="tg">'+x.tier+'</span><span class="tt">'+x.label+'</span><span class="td">'+x.desc+'</span></div>';}).join('');
+ var spaceChips=Object.keys(lp.spaces).map(function(sp){return '<button class="chip '+((s.picked.space&&sp===s.space)?'on':'')+'" onclick="_sw.selSpace(\''+sp.replace(/'/g,"\\'")+'\')">'+sp+'</button>';}).join('');
+ var recM=lp.spaces[s.space].method;
+ var methodChips=lp.methods.map(function(m){return '<button class="chip '+((s.picked.method&&m===s.method)?'on':'')+'" onclick="_sw.selMethod(\''+m+'\')"><span>'+m+'</span>'+(m===recM?'<span class="rec">추천</span>':'')+'</button>';}).join('');
+ var recMode=lp.spaces[s.space].mode;
+ var modeChips=Object.keys(lp.modes).map(function(md){return '<button class="chip '+((s.picked.mode&&md===s.mode)?'on':'')+'" onclick="_sw.selMode(\''+md.replace(/'/g,"\\'")+'\')"><span>'+md+'</span>'+(md===recMode?'<span class="rec">추천</span>':'')+'</button>';}).join('');
+ var structChips=Object.keys(STR).map(function(k){return '<button class="chip '+(k===s.struct?'on':'')+'" onclick="_sw.selStruct(\''+k+'\')"><span><b>'+STR[k].n+'</b> <span style="color:var(--mut);font-size:11px">'+STR[k].d+'</span></span></button>';}).join('');
+ var lenChips=lp.modes[s.mode].lengths.map(function(x){return '<button class="chip '+((s.picked.length&&x===s.length)?'on':'')+'" onclick="_sw.selLength(\''+x+'\')">'+x+'</button>';}).join('');
+ var order=stepOrder();
+ var chipMap={space:spaceChips,method:methodChips,mode:modeChips,struct:structChips,length:lenChips};
+ var titleMap={space:'공간',method:'청음 방식',mode:'목적',struct:'구조',length:'길이'};
+ var valMap={space:s.space,method:s.method,mode:s.mode,struct:hasVariants()?STR[s.struct].n:'',length:s.length};
+ var stepsHTML=order.map(function(type,idx){var i=idx+1;var confirmed=(s.step>i||s.done);return stepEl(i,titleMap[type],confirmed?valMap[type]:'',chipMap[type]);}).join('');
+ var steps='<div class="steps">'+stepsHTML+'</div>';
+ var cardHTML='';
+ if(s.done){
+  var md=lp.modes[s.mode],cv=curOf();
+  function shd(n,t,x){return '<div class="shd"><span class="sn">'+n+'</span>'+t+(x?'<span class="sx">'+x+'</span>':'')+'</div>';}
+  // 조각 1 — 시간 설계 (구조탭 + 곡선 + 타임라인)
+  var structTabs='';
+  if(hasVariants()){
+   var st=Object.keys(STR).map(function(k){return '<button class="stab '+(k===s.struct?'on':'')+'" onclick="_sw.selStruct(\''+k+'\')">'+STR[k].n+'</button>';}).join('');
+   structTabs='<p class="sec">구조 · 탭으로 비교</p><div class="stabs">'+st+'</div><div class="sdesc">'+STR[s.struct].d+'</div>';
+  }
+  var themeTabs='';
+  if(hasThemes()){
+   var tms=L[s.lineup].modes[s.mode].themes,th=themeOf();
+   var tt=Object.keys(tms).map(function(k){return '<button class="stab '+(k===s.theme?'on':'')+'" onclick="_sw.selTheme(\''+k.replace(/'/g,"\\'")+'\')">'+k+'</button>';}).join('');
+   themeTabs='<p class="sec">테마 · 탭으로 선택</p><div class="stabs">'+tt+'</div><div class="sdesc">'+th.mood+'</div>';
+   if(th.arc&&cv){themeTabs+='<div class="arc">'+th.arc.map(function(a,i){return '<div class="arow2"><b>'+(cv[i]?cv[i][0]:'')+'</b>'+a+'</div>';}).join('')+'</div>';}
+  }
+  var curveBlock='';
+  if(cv){
+   var moods=cv.map(function(c){return '<span class="mood"><b>'+c[0]+'</b><span>'+c[1]+'</span></span>';}).join('');
+   var pLabel=(lp.unit==='BPM'?'BPM 곡선':'뇌파 진행');
+   curveBlock='<p class="sec">'+pLabel+'</p>'+curveSVG(cv,ac,lp.unit)+'<div class="moods" style="margin-top:8px">'+moods+'</div>';
+   var tl=timeline(cv,parseMin(s.length));
+   if(tl)curveBlock+=timelineHTML(tl,parseMin(s.length),ac);
+  }
+  // 조각 2 — 사운드 기반 (청음 + 자연 ASMR 베이스)
+  var soundBlock='<p class="sec">청음 방식 · '+s.method+'</p><div class="note">'+M[s.method].note+'</div>';
+  if(s.method==='스피커'){var nr=asmrRec();soundBlock+='<p class="sec">자연 ASMR 베이스 (바이노럴 대체)</p><div class="nat"><b>'+nr.n+'</b><br>'+nr.r+'</div>';}
+  // 조각 3 — 편곡 레이어
+  var arrBlock=md.arr?arrHTML(md.arr,ac):'';
+  // 조각 4 — 근거 · 검토
+  var refBlock='';
+  if(md.sci)refBlock+='<div class="sci">'+md.sci+'</div>';
+  if(md.warn)refBlock+='<div class="warn">⚠ '+md.warn+'</div>';
+  var metaBlock='<div class="meta" style="margin-top:14px"><div class="mtile"><div class="l">길이</div><div class="v">'+s.length+'</div></div><div class="mtile"><div class="l">테마 · 구성</div><div class="v" style="font-size:12px;line-height:1.4">'+md.theme+'</div></div></div>';
+  var structTag=hasVariants()?'<span style="font-size:12px;color:var(--mut)">'+STR[s.struct].n+'</span>':'';
+  var secs=[];
+  if(cv)secs.push([structTabs+themeTabs+curveBlock,'진행 설계 · 시간축',s.length]);
+  if(md.arr)secs.push([arrBlock,'사운드 구성 · 트랙 레이어','기반 위에 쌓기']);
+  secs.push([soundBlock,'재생·청취 · 출력 환경',s.method]);
+  if(refBlock)secs.push([refBlock,'근거 · 검토','']);
+  var secsHTML=secs.map(function(x,i){return shd(String(i+1),x[1],x[2])+x[0];}).join('');
+  cardHTML='<div class="card"><div class="chead"><span class="bd">'+lp.label+'</span><span style="font-weight:700">'+s.space+' · '+s.mode+'</span><span style="font-size:12px;color:var(--mut)">'+md.tag+'</span>'+structTag+'</div>'
+   +'<div class="path">'+s.space+' → '+s.method+' → '+s.mode+(hasVariants()?' → '+STR[s.struct].n:'')+' → '+s.length+'</div>'
+   +metaBlock
+   +secsHTML
+   +'<button class="gen" style="margin-top:18px" onclick="_sw.toggleSpec()">'+(showSpec?'사양 접기':'이 프리셋 사양 보기')+'</button><div class="spec '+(showSpec?'show':'')+'"><h4>프리셋 제작 사양</h4><pre id="specTxt">'+specText()+'</pre><button class="cpy" id="cpyBtn" onclick="_sw.copySpec()">사양 텍스트 복사</button><button class="cpy" onclick="_sw.exportJSON()" style="margin-left:8px">JSON 내보내기 · 빌더 앱용</button><button class="cpy" onclick="_sw.exportMIDI()" style="margin-left:8px">MIDI 내보내기 · Logic용</button></div></div>';
+ }
+ el.innerHTML='<div class="tabs">'+tabs+'</div>'+steps+cardHTML;
+}
+applySpace(Object.keys(L.therapy.spaces)[0]);render();
+</script></body></html>
